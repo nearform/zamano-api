@@ -1,35 +1,44 @@
 var assert = require('chai').assert;
 var zamano = require('../')();
-var sinon  = require('sinon');
+var nock   = require('nock');
+var http   = require('http');
 
 describe('zamano-api message submitting', function() {
-	var server;
-	beforeEach(function() {
-		server = sinon.fakeServer.create();
-	});
+	var scope = nock('http://mmg.zamano.com')
+		.persist()
+		.get('/')
+		.replyWithFile(200, __dirname + '/testXML/success.xml')
+		.get('/Aggregation/servlet/implementation.listeners.http.SendTextMessage' +
+			'?clientId=<ClientID>' +
+			'&password=<password>' +
+			'&sourceMsisdn=<shortcode>' +
+			'&operatorId=<OperatorID>' +
+			'&destinationMsisdn=<MS-ISDN>' +
+			'&messageText=<Text+of+the+Message>' +
+			'&requestId=<Message_unique_ID>')
+		.replyWithFile(200, __dirname + '/testXML/success.xml')
 
-	afterEach(function() {
-		server.restore();
-	});
+	it('should request the server and call the callback with the parsed response', function(done) {
 
-	it('should request the server and call the callback with the parsed response', function() {
-		server.respondWith('HTTP://mmg.zamano.com/Aggregation/servlet/implementation.listeners.http.SendTextMessage', [
-			200,
-			{ 'Content-Type': 'text/xml' },
-			'<?xml version="1.0" encoding="ISO-8859-1" ?> ' +
-				'<acknowledgement>' +
-					'<requestId>12546</requestId>' +
-					'<status>13</status>' +
-					'<responseID>545466</responseID>' +
-					'<errorText>Invalid Parameters</errorText>' +
-				'</acknowledgement>'
-		]);
+		zamano.sendMessage({
+			sourceMsisdn:'50015',
+			destinationMsisdn:'3538703454',
+			messageText: 'Hello world',
+			operatorId: '1'
+		}, function(err, out) {
+			assert.isNull(err, 'Error is null')
+			assert.isObject(out, 'The output is an object')
+			done()
+		})
 
-		var callback = sinon.spy()
-		zamano.sendMessage({number: 'number', message: 'message'}, callback);
-		server.respond();
+	})
 
-		sinon.assert.calledWith(callback, { requestId: '12546', status: '13', responseID: '545466' });
-	});
+	it('should respond with an error if all fields are missing', function(done) {
+		zamano.sendMessage({}, function(err, out) {
+			assert.isNotNull(err, 'Error is not null')
+			assert.throws(function() {throw err}, /Missing required fields: sourceMsisdn, destinationMsisdn, messageText, operatorId/)
+			done()
+		})
+	})
 
 });
