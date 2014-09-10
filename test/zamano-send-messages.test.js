@@ -1,5 +1,5 @@
 var assert = require('chai').assert;
-var zamano = require('../')();
+var zamano = require('../')('TEST_CLIENT_ID', 'TEST_PASSWORD');
 var nock   = require('nock');
 var http   = require('http');
 
@@ -9,13 +9,12 @@ describe('zamano-api message submitting', function() {
 		.get('/')
 		.replyWithFile(200, __dirname + '/testXML/success.xml')
 		.get('/Aggregation/servlet/implementation.listeners.http.SendTextMessage' +
-			'?clientId=<ClientID>' +
-			'&password=<password>' +
-			'&sourceMsisdn=<shortcode>' +
-			'&operatorId=<OperatorID>' +
-			'&destinationMsisdn=<MS-ISDN>' +
-			'&messageText=<Text+of+the+Message>' +
-			'&requestId=<Message_unique_ID>')
+			'?sourceMsisdn=50015' +
+			'&destinationMsisdn=3538703454' +
+			'&messageText=Hello%20world' +
+			'&operatorId=1' +
+			'&clientId=TEST_CLIENT_ID' +
+			'&password=TEST_PASSWORD')
 		.replyWithFile(200, __dirname + '/testXML/success.xml')
 
 	it('should request the server and call the callback with the parsed response', function(done) {
@@ -28,6 +27,11 @@ describe('zamano-api message submitting', function() {
 		}, function(err, out) {
 			assert.isNull(err, 'Error is null')
 			assert.isObject(out, 'The output is an object')
+			assert.deepEqual(out, { 
+				requestId: '12546',
+			  status: '13',
+			  responseID: '545466',
+			  errorText: 'Invalid Parameters' }, 'The output matches the XML document')
 			done()
 		})
 
