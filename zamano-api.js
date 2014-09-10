@@ -1,5 +1,6 @@
 var http = require('http'),
-		parseString = require('xml2js').parseString
+		parseString = new require('xml2js').Parser({explicitArray:false, explicitRoot:false}).parseString,
+		querystring = require('querystring')
 
 
 function sendMessage (opts, cb) {
@@ -12,12 +13,18 @@ function sendMessage (opts, cb) {
 	if(missingFields.length) {
 		return cb(new Error('Missing required fields: ' + missingFields.join(', ')))
 	}
+	
 	opts.clientId = this.clientId
 	opts.password = this.password
 
-	http.get('http://mmg.zamano.com', handleResponse)
-		.on('error', function(err) {
-			return cb(err)
+	var params = querystring.stringify(opts)
+
+	// Make request to zamano server
+	http.get('http://mmg.zamano.com' + 
+		'/Aggregation/servlet/implementation.listeners.http.SendTextMessage?' + params, 
+		handleResponse)
+	.on('error', function(err) {
+		return cb(err)
 	})
 
 	function handleResponse(res) {
