@@ -9,8 +9,11 @@
   "author": "Jake Pruitt",
   "license": "ISC",
   "devDependencies": {
-    "mocha": "~1.21.4",
     "chai": "~1.9.1",
-    "sinon": "~1.10.3"
+    "sinon": "~1.10.3",
+    "nock": "~0.46.1"
+  },
+  "dependencies": {
+    "lodash": "~2.4.1"
   }
 }
