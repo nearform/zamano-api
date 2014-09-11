@@ -10,6 +10,10 @@ describe('zamano-api message receiving', function() {
 		res.send(req.mobileMessage)
 	})
 
+	app.post('/api/MO/err/', zamano.messageHandler(), function(err, req, res, next) {
+		if (err) { res.send(err) }
+	})
+
 	var server = http.createServer(app)
 	server.listen(3000)
 
@@ -25,5 +29,15 @@ describe('zamano-api message receiving', function() {
 			assert.deepEqual(bodyObj, {username:'TEST_CLIENT_ID', password:'TEST_PASSWORD'})
 			done()
 		})
+	})
+
+	it('should throw an error when username and password are incorrect', function(done) {
+			request({
+				method: 'POST',
+				url: testURL + '/api/MO/err' + '?username=INCORRECT_ID&password=WRONG_PASSWORD'
+			}, function(err, res, body) {
+				assert.isNotNull(body)
+				done()
+			})
 	})
 })

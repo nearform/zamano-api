@@ -55,7 +55,7 @@ function messageHandler (opts) {
 			req.mobileMessage = req.query
 			next()
 		} else {
-			next('Request not authenticated')
+			next(new Error('Request not authenticated'))
 		}
 	}
 }
