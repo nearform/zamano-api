@@ -10,9 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "~1.9.1",
-    "nock": "~0.46.1"
+    "nock": "~0.46.1",
+    "express": "~4.9.0",
+    "request": "~2.42.0"
   },
   "dependencies": {
-    "xml2js": "~0.4.4"
+    "xml2js": "~0.4.4",
+    "express": "~4.9.0"
   }
 }

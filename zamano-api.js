@@ -1,4 +1,4 @@
-var http = require('http'),
+var http        = require('http'),
 		parseString = require('xml2js').Parser({explicitArray:false, explicitRoot:false}).parseString,
 		querystring = require('querystring')
 
@@ -16,8 +16,8 @@ function sendMessage (opts, cb) {
 		})
 	}
 	
-	opts.clientId = this.clientId
-	opts.password = this.password
+	opts.clientId = opts.clientId || this.zamanoId
+	opts.password = opts.password || this.password
 
 	var params = querystring.stringify(opts)
 
@@ -38,36 +38,35 @@ function sendMessage (opts, cb) {
 
 		function translateXML() {
 			parseString(xmlResponse, function(err, result) {
-				return cb(null, result)
+				if (err) { return cb(err) }
+				if (result.status === '0') { return cb(null, result) }
+
+				return cb(new Error(result.errorText))
 			})
 		}
 	}
 }
 
+function messageHandler (opts) {
+	var self = this
 
-exports = module.exports = function zamano (clientId, password) {
+	return function hook(req, res, next) {
+		if (req.query.username === self.zamanoId && req.query.password === self.password) {
+			req.mobileMessage = req.query
+			next()
+		} else {
+			next('Request not authenticated')
+		}
+	}
+}
+
+
+exports = module.exports = function zamano (zamanoId, password) {
 	return {
-		clientId: clientId,
+		zamanoId: zamanoId,
 		password: password,
 		sendMessage: sendMessage,
-
-		sendBulk: function sendBulk(options, cb) {
-			// body...
-		},
-
-		messageHandler: function messageHandler (options, cb) {
-			return function(req, res, next) {
-				next();
-			}
-		},
-
-		setAuth: function(username, password) {
-			// body...
-			return {
-				username: username,
-				password: password
-			}
-		},
+		messageHandler: messageHandler,
 
 		version: '0.0.0'
 	}
