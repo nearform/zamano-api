@@ -1,5 +1,5 @@
 var http = require('http'),
-		parseString = new require('xml2js').Parser({explicitArray:false, explicitRoot:false}).parseString,
+		parseString = require('xml2js').Parser({explicitArray:false, explicitRoot:false}).parseString,
 		querystring = require('querystring')
 
 
@@ -11,7 +11,9 @@ function sendMessage (opts, cb) {
 		return !opts.hasOwnProperty(key)
 	})
 	if(missingFields.length) {
-		return cb(new Error('Missing required fields: ' + missingFields.join(', ')))
+		return setImmediate(function() {
+			return cb(new Error('Missing required fields: ' + missingFields.join(', ')))
+		})
 	}
 	
 	opts.clientId = this.clientId

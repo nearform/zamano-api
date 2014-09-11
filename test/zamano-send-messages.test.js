@@ -15,7 +15,15 @@ describe('zamano-api message submitting', function() {
 			'&operatorId=1' +
 			'&clientId=TEST_CLIENT_ID' +
 			'&password=TEST_PASSWORD')
-		.replyWithFile(200, __dirname + '/testXML/success.xml')
+		.replyWithFile(200, __dirname + '/testXML/invalid-parameters.xml')
+		.get('/Aggregation/servlet/implementation.listeners.http.SendTextMessage' +
+			'?sourceMsisdn=50015' +
+			'&destinationMsisdn=3538703454' +
+			'&messageText=Hello%20world' +
+			'&operatorId=1' +
+			'&clientId=TEST_CLIENT_ID' +
+			'&password=TEST_PASSWORD')
+		.replyWithFile(200, __dirname + '/testXML/invalid-parameters.xml')
 
 	it('should request the server and call the callback with the parsed response', function(done) {
 
