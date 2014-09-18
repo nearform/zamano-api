@@ -57,9 +57,13 @@ function sendMessage (opts, cb) {
 function messageHandler (opts) {
 	var self = this
 
+	// Defaults ID and password to global parameters
+	opts.zamanoId = opts.zamanoId || this.zamanoId
+	opts.password = opts.password || this.password
+
 	return function hook(req, res, next) {
 		// Check if the request used the correct ID and password
-		if (req.query.username === self.zamanoId && req.query.password === self.password) {
+		if (req.query.username === opts.zamanoId && req.query.password === opts.password) {
 			req.mobileMessage = req.query
 			next()
 		} else {
