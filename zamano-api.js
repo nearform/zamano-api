@@ -76,6 +76,6 @@ exports = module.exports = function zamano (zamanoId, password) {
 		sendMessage: sendMessage,
 		messageHandler: messageHandler,
 
-		version: '0.0.0'
+		version: '0.1.0'
 	}
 }
