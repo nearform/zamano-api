@@ -6,11 +6,11 @@ var assert  = require('chai').assert,
 
 describe('zamano-api message receiving', function() {
 
-	app.post('/api/MO', zamano.messageHandler(), function(req, res) {
+	app.get('/api/MO', zamano.messageHandler(), function(req, res) {
 		res.send(req.mobileMessage)
 	})
 
-	app.post('/api/MO/err/', zamano.messageHandler(), function(err, req, res, next) {
+	app.get('/api/MO/err/', zamano.messageHandler(), function(err, req, res, next) {
 		if (err) { res.send(err) }
 	})
 
@@ -20,7 +20,7 @@ describe('zamano-api message receiving', function() {
 	var testURL = 'http://localhost:3000'
 	it('should add a mobileMessage object to the request', function(done) {
 		request({
-			method: 'POST',
+			method: 'GET',
 			url: testURL + '/api/MO' + '?username=TEST_CLIENT_ID&password=TEST_PASSWORD'
 		}, function(err, res, body) {
 			assert.isNull(err)
@@ -33,7 +33,7 @@ describe('zamano-api message receiving', function() {
 
 	it('should throw an error when username and password are incorrect', function(done) {
 			request({
-				method: 'POST',
+				method: 'GET',
 				url: testURL + '/api/MO/err' + '?username=INCORRECT_ID&password=WRONG_PASSWORD'
 			}, function(err, res, body) {
 				assert.isNotNull(body)
