@@ -56,6 +56,7 @@ function sendMessage (opts, cb) {
 
 function messageHandler (opts) {
 	var self = this
+	opts = opts || {}
 
 	// Defaults ID and password to global parameters
 	opts.zamanoId = opts.zamanoId || this.zamanoId
