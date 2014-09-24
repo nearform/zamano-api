@@ -44,6 +44,14 @@ describe('zamano-api message submitting', function() {
 
 	})
 
+	it('should use the proper defaults when called without sourceMsisdn and operatorId', function(done) {
+		done()
+	})
+
+	it('should override the clientId and password, if present', function(done) {
+		done()
+	})
+
 	it('should callback an error when the response has an error', function(done) {
 		zamano.sendMessage({
 			sourceMsisdn:'50015',
@@ -57,10 +65,10 @@ describe('zamano-api message submitting', function() {
 		})
 	})
 
-	it('should respond with an error if all fields are missing', function(done) {
+	it('should respond with an error if destination and messageText are missing', function(done) {
 		zamano.sendMessage({}, function(err, out) {
 			assert.isNotNull(err, 'Error is not null')
-			assert.throws(function() {throw err}, /Missing required fields: sourceMsisdn, destinationMsisdn, messageText, operatorId/)
+			assert.throws(function() {throw err}, /Missing required fields: destinationMsisdn, messageText/)
 			done()
 		})
 	})

@@ -6,10 +6,14 @@ var http        = require('http'),
 function sendMessage (opts, cb) {
 	// Check for missing required fields
 	opts = opts || {}
-	var requiredFields = ['sourceMsisdn','destinationMsisdn','messageText','operatorId']
+	var requiredFields = ['destinationMsisdn','messageText']
+
+	// Filter the required fields to determine which fields
+	// are missing from the opts object
 	var missingFields = requiredFields.filter(function(key) {
 		return !opts.hasOwnProperty(key)
 	})
+
 	if(missingFields.length) {
 		// Return and call the callback with an error asynchronously
 		return setImmediate(
@@ -20,8 +24,14 @@ function sendMessage (opts, cb) {
 	}
 	
 	// Defaults ID and password to global parameters
-	opts.clientId = opts.clientId || this.zamanoId
+	opts.clientId = opts.clientId || this.clientId
 	opts.password = opts.password || this.password
+
+	// Defaults sourceMsisdn to 8060 (the bulk route for Irish mobiles)
+	opts.sourceMsisdn = opts.sourceMsisdn || '8060'
+
+	// Defaults operatorId to Vodafone (1)
+	opts.operatorId = opts.operatorId || '1'
 
 	var params = querystring.stringify(opts)
 
@@ -39,9 +49,8 @@ function sendMessage (opts, cb) {
 		res.on('data', function aggregateResponse(chunk) {
 			xmlResponse += chunk
 		})
-		res.on('end', translateXML)
 
-		function translateXML() {
+		res.on('end', function translateXML() {
 			// Parse string of XML to object
 			parseString(xmlResponse, function useObject(err, result) {
 				if (err) { return cb(err) }
@@ -50,33 +59,35 @@ function sendMessage (opts, cb) {
 
 				return cb(new Error(result.errorText))
 			})
-		}
+		})
 	}
 }
 
 function messageHandler (opts) {
 	var self = this
-	opts = opts || {}
 
-	// Defaults ID and password to global parameters
-	opts.zamanoId = opts.zamanoId || this.zamanoId
-	opts.password = opts.password || this.password
+	// NOTE: username and password are not the same for handler
+	// and client. Thus, global id and password cannot be used as defaults
 
 	return function hook(req, res, next) {
 		// Check if the request used the correct ID and password
-		if (req.query.username === opts.zamanoId && req.query.password === opts.password) {
+		if (!opts) {
+			req.mobileMessage = req.query
+			next()
+		}	else if (req.query.username === opts.username && req.query.password === opts.password) {
 			req.mobileMessage = req.query
 			next()
 		} else {
-			next(new Error('Request not authenticated'))
+			res.status(500)
+			res.send({error: 'Request not Authenticated'})
 		}
 	}
 }
 
 
-exports = module.exports = function zamano (zamanoId, password) {
+exports = module.exports = function zamano (clientId, password) {
 	return {
-		zamanoId: zamanoId,
+		clientId: clientId,
 		password: password,
 		sendMessage: sendMessage,
 		messageHandler: messageHandler,
