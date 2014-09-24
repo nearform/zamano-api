@@ -88,12 +88,30 @@ Shortcodes
 | Ireland             | &euro;2.00 | 57033      |
 | Ireland             | &euro;2.50 | 57030      |
 | Ireland             | Bulk SMS   | 8060       |
-| UK                  | Free       | 50015      |
-| UK                  | 25p        | 50015      |
-| UK                  | 50p        | 50015      |
-| UK                  | &pound;1.00| 50015      |
-| UK                  | &pound;1.00| 50015      |
-| UK                  | &pound;1.00| 50015      |
-| UK                  | &pound;1.00| 50015      |
+| UK                  | Free       | 81515      |
+| UK                  | 25p        | 86122      |
+| UK                  | 50p        | 88122      |
+| UK                  | &pound;1.00| 84122      |
+| UK                  | &pound;1.50| 80122      |
+| UK                  | &pound;1.50| 81812      |
+| UK                  | &pound;1.50| 85122      |
+| UK                  | &pound;1.50 Adult| 89122|
+| UK                  | &pound;1.50 Adult| 89650|
+| UK                  | &pound;3.00| 66033      |
+| UK                  | Bulk SMS   | Please contact your account manager|
+| Australia           | Various Price points available | Please contact your account manager|
 
 ### OperatorID
+
+| Operator ID | Mobile Network Operator |
+|:-----------:|:-----------------------:|
+| 1           | Vodafone Ireland        |
+| 2           | 02 Ireland              |
+| 3           | Meteor (Ireland)        |
+| 4           | O2 UK                   |
+| 5           | Vodafone UK             |
+| 6           | Orange (UK)             |
+| 7           | T-Mobile (UK)           |
+| 12          | Three UK                |
+| 14          | Three Ireland           |
+| 21          | Tesco (Ireland)         |
