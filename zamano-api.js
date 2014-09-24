@@ -92,6 +92,6 @@ exports = module.exports = function zamano (clientId, password) {
 		sendMessage: sendMessage,
 		messageHandler: messageHandler,
 
-		version: '0.1.0'
+		version: '0.1.2'
 	}
 }

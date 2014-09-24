@@ -1,6 +1,6 @@
 {
   "name": "zamano-api",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "zamano SMS middleware/client API for end users to communicate to HTTP API",
   "main": "zamano-api.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "devDependencies": {
     "chai": "~1.9.1",
     "nock": "~0.46.1",
-    "express": "~4.9.0",
+    "express": "~4.9.4",
     "request": "~2.42.0"
   },
   "dependencies": {
