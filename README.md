@@ -38,8 +38,8 @@ Parameters:
   - `opts` (Object) 
     * `destinationMsisdn` - destination mobile phone number.
     * `messageText` - text of the message.
-    * `sourceMsisdn` (optional) - short code representing the tariff amount and country. Will default to 8060 (the bulk route for Irish mobiles). See [the shortcode table](#Shortcodes) below.
-    * `operatorId` (optional) - The unique identifier of the Mobile Network Operator.  If unspecified, it will be set to Vodafone (1). See [the operator ID table](#OperatorID) below.
+    * `sourceMsisdn` (optional) - short code representing the tariff amount and country. Will default to 8060 (the bulk route for Irish mobiles). See [the shortcode table](#shortcodes) below.
+    * `operatorId` (optional) - The unique identifier of the Mobile Network Operator.  If unspecified, it will be set to Vodafone (1). See [the operator ID table](#operatorid) below.
     * `requestId` (optional) - a reference/tag for this message.
     * `sourceMsisdnTag` (optional) - the label that the message will appear to come from on end users' handsets.
     * `clientId` (optional) - an override for the Id set at initialization.
@@ -61,7 +61,7 @@ Express middleware for parsing mobile-originating (MO) SMS message requests from
   })
   ```
   
-Request authentication is done by passing the mobile-originating zamano username and password to the `handleMessages` function. *NOTE* this is a different username and password than the client id and password set at initialization.  Contact your zamano representative if you have questions about your usernames and passwords.
+Request authentication is done by passing the mobile-originating zamano username and password to the `handleMessages` function. **NOTE** this is a different username and password than the client id and password set at initialization.  Contact your zamano representative if you have questions about your usernames and passwords.
 
 If the options are not passed to the `handleMessages` function, no authentication will be performed.  This means any requests will be accepted by the middleware.  Note: zamano will always make a request from the same IP, which means you can choose to manually authenticate by IP address instead of using the username and password.
 
