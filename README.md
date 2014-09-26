@@ -75,43 +75,4 @@ The mobileMessage object that is attached to the request has the following prope
 
 Note: Zamano's server expects a response from the mobile originating message request.  If there is no response within 2 seconds, then the transaction will be considered failed.
 
-Shortcodes
-----------
-
-| Destination Country | MT Tariff  | Short Code |
-|:-------------------:|:----------:|:----------:|
-| Ireland             | Free       | 50015      |
-| Ireland             | Standard   | 51444      |
-| Ireland             | &euro;0.30 | 53030      |
-| Ireland             | &euro;0.60 | 53033      |
-| Ireland             | &euro;2.00 | 57252      |
-| Ireland             | &euro;2.00 | 57033      |
-| Ireland             | &euro;2.50 | 57030      |
-| Ireland             | Bulk SMS   | 8060       |
-| UK                  | Free       | 81515      |
-| UK                  | 25p        | 86122      |
-| UK                  | 50p        | 88122      |
-| UK                  | &pound;1.00| 84122      |
-| UK                  | &pound;1.50| 80122      |
-| UK                  | &pound;1.50| 81812      |
-| UK                  | &pound;1.50| 85122      |
-| UK                  | &pound;1.50 Adult| 89122|
-| UK                  | &pound;1.50 Adult| 89650|
-| UK                  | &pound;3.00| 66033      |
-| UK                  | Bulk SMS   | Please contact your account manager|
-| Australia           | Various Price points available | Please contact your account manager|
-
-### OperatorID
-
-| Operator ID | Mobile Network Operator |
-|:-----------:|:-----------------------:|
-| 1           | Vodafone Ireland        |
-| 2           | 02 Ireland              |
-| 3           | Meteor (Ireland)        |
-| 4           | O2 UK                   |
-| 5           | Vodafone UK             |
-| 6           | Orange (UK)             |
-| 7           | T-Mobile (UK)           |
-| 12          | Three UK                |
-| 14          | Three Ireland           |
-| 21          | Tesco (Ireland)         |
+For Shortcodes and Operator IDs, please refer to Zamano.
