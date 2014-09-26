@@ -1,13 +1,13 @@
 {
   "name": "zamano-api",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "zamano SMS middleware/client API for end users to communicate to HTTP API",
   "main": "zamano-api.js",
   "scripts": {
     "test": "mocha test"
   },
   "author": "Jake Pruitt",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "chai": "~1.9.1",
     "nock": "~0.46.1",
