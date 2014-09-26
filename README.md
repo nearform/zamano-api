@@ -3,6 +3,8 @@ zamano-api
 
 Node.js API for Zamano, a mobile message aggregation service.  Allows servers to send and recieve mobile text and binary messages.
 
+Version: 0.1.5
+
 Setup
 -----
 
@@ -12,9 +14,9 @@ To install the package, run:
   
 Then call `require` with your client ID and password provided by Zamano.  The id and password are required by zamano to authenticate you before sending your mobile message.
 
-  ```JavaScript
-  var zamano = require('zamano-api')('CLIENT_ID', 'ZAMANO_PASSWORD')
-  ```
+```JavaScript
+var zamano = require('zamano-api')('CLIENT_ID', 'ZAMANO_PASSWORD')
+```
 
 Usage
 -----
@@ -25,21 +27,21 @@ Zamano has API methods for both sending and receiving mobile messages.
 
 `zamano.sendMessage` sends a text message to a mobile number over a specific mobile network operator. This method calls back with either a success object or error object with messages from Zamano's service.  Internally, this method sends a request to Zamano's HTTP API and parses the XML response into a JavaScript object.
 
-  ```JavaScript
-  zamano.sendMessage({
-		sourceMsisdn:'50015',
-		destinationMsisdn:'3538703454',
-		messageText: 'Hello world',
-		operatorId: '1'
-	}, function(err, out) {...})
-  ```
+```JavaScript
+zamano.sendMessage({
+  sourceMsisdn:      'SHORT_CODE',
+  destinationMsisdn: 'PHONE_NUMBER',
+  messageText:       'Hello world',
+  operatorId:        'ID_NUMBER'
+}, function(err, out) {...})
+```
 
 Parameters:
   - `opts` (Object) 
     * `destinationMsisdn` - destination mobile phone number.
     * `messageText` - text of the message.
-    * `sourceMsisdn` (optional) - short code representing the tariff amount and country. Will default to 8060 (the bulk route for Irish mobiles). See [the shortcode table](#shortcodes) below.
-    * `operatorId` (optional) - The unique identifier of the Mobile Network Operator.  If unspecified, it will be set to Vodafone (1). See [the operator ID table](#operatorid) below.
+    * `sourceMsisdn` (optional) - short code representing the tariff amount and country.
+    * `operatorId` (optional) - The unique identifier of the Mobile Network Operator.
     * `requestId` (optional) - a reference/tag for this message.
     * `sourceMsisdnTag` (optional) - the label that the message will appear to come from on end users' handsets.
     * `clientId` (optional) - an override for the Id set at initialization.
@@ -52,14 +54,14 @@ Parameters:
 
 Express middleware for parsing mobile-originating (MO) SMS message requests from Zamano.  Use the function as middleware in a app.get('<URL>') function to authenticate the request from Zamano and add a `mobileMessage` property to the `request` object:
 
-  ```JavaScript
-  app.get('/api/mo', 
-    zamano.handleMessages({username: 'MO_USERNAME', password: 'MO_PASSWORD'}),
-    function(req, res) {
-      console.dir(req.mobileMessage)
-      res.end()
-  })
-  ```
+```JavaScript
+app.get('/api/mo', 
+  zamano.handleMessages({username: 'MO_USERNAME', password: 'MO_PASSWORD'}),
+  function(req, res) {
+    console.dir(req.mobileMessage)
+    res.end()
+})
+```
   
 Request authentication is done by passing the mobile-originating zamano username and password to the `handleMessages` function. **NOTE** this is a different username and password than the client id and password set at initialization.  Contact your zamano representative if you have questions about your usernames and passwords.
 
