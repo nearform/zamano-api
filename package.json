@@ -1,6 +1,6 @@
 {
   "name": "zamano-api",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "zamano SMS middleware/client API for end users to communicate to HTTP API",
   "repository": "git@github.com:nearform/zamano-api.git",
   "main": "zamano-api.js",
