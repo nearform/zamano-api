@@ -11,8 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "~1.10.0",
-    "nock": "~0.52.4",
-    "express": "~4.10.6",
+    "nock": "~0.59.1",
+    "express": "~4.11.1",
     "request": "~2.51.0"
   },
   "dependencies": {
