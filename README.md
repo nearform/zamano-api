@@ -1,6 +1,9 @@
 zamano-api
 ==========
 
+[![NPM](https://nodei.co/npm/zamano-api.png)](https://nodei.co/npm/zamano-api/)
+[![NPM](https://nodei.co/npm-dl/zamano-api.png)](https://nodei.co/npm/zamano-api/)
+
 Node.js API for Zamano, a mobile message aggregation service.  Allows servers to send and recieve mobile text and binary messages.
 
 Version: 0.1.5
